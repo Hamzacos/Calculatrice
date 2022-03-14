@@ -28,7 +28,7 @@ function gererTouches(event){
     }else{
         touche = this.innerText;
     } 
-    if(parseFloat(touche) >= 0 || touche === "."){
+    if(parseFloat(touche) >= 0 ){
         affichage = (affichage === "") ? touche.toString() : affichage + touche.toString();
         ecranELT.innerText = affichage; 
     }else{
@@ -40,12 +40,16 @@ function gererTouches(event){
                 operation = null;
                 ecranELT.innerText = 0;
             break;
+            case "+/-":
+                affichage = affichage*(-1);
+                ecranELT.innerText = affichage;
+                break;
             case "+":
             case "-":
             case "*":
             case "/":
                 precedent = (precedent === 0) ? parseFloat(affichage) :
-                calculer(precedent,parseFloat(affichage).operation);
+                calculer(precedent,parseFloat(affichage),operation);
                 ecranELT.innerText = precedent;
                 operation = touche;
                 affichage = "";
@@ -73,6 +77,12 @@ function gererTouches(event){
                 affichage = memoire;
                 ecranELT.innerText = memoire;
                 break;
+            case ".":
+                if(!affichage.includes(".")){
+                    affichage = affichage + ".";
+                }
+            ecranELT.innerText = affichage;
+            break;
         }
     }
 }
